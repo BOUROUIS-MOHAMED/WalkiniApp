@@ -4,26 +4,46 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:start_up_project/BranchScreen.dart';
+import 'package:start_up_project/screens/auth/additionalData/birthday_picker_screen.dart';
+import 'package:start_up_project/screens/auth/additionalData/country_picker_screen.dart';
+import 'package:start_up_project/screens/auth/additionalData/genderSelectorScreen.dart';
+import 'package:start_up_project/screens/auth/additionalData/goals_selector_screen.dart';
+import 'package:start_up_project/screens/auth/additionalData/height_picker_screen.dart';
+import 'package:start_up_project/screens/auth/additionalData/loading_screen.dart';
+import 'package:start_up_project/screens/auth/additionalData/physical_problem_picker_screen.dart';
+import 'package:start_up_project/screens/auth/additionalData/trial_version_screen.dart';
 import 'package:start_up_project/screens/auth/forgot_password_screen.dart';
 import 'package:start_up_project/screens/auth/otpSender.dart';
+import 'package:start_up_project/screens/box_screen.dart';
 import 'package:start_up_project/screens/checkout/checkout_screen.dart';
 import 'package:start_up_project/screens/home.dart';
 import 'package:start_up_project/screens/on_boarding_screens/on_boarding_screen.dart';
 import 'package:start_up_project/screens/permissions/permission%20widgets/activity_tracker_permission_widget.dart';
+import 'package:start_up_project/screens/route/route_helper.dart';
 
 
 import 'package:start_up_project/screens/tab%20Bar/mainScreen.dart';
 import 'package:start_up_project/subscription_reminder_screen.dart';
-
+import 'package:start_up_project/screens/unbox_screen.dart';
+import 'helper/dependencies.dart' as dep;
 
 import 'constants.dart';
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+
+  await dep.init();
   await GetStorage.init();
+
+
 
 
 
@@ -31,6 +51,7 @@ void main() async{
       overlays: [SystemUiOverlay.bottom]);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
+    FlutterNativeSplash.remove();
     runApp( MyApp());
   });
 }
@@ -103,7 +124,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         {
 
-          return MaterialApp(
+          return GetMaterialApp(
             title: 'Auth Screen 1',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
@@ -124,7 +145,9 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
-            home:SubscriptionReminderScreen()
+            initialRoute: RouteHelper.getBranchScreen(),
+            getPages: RouteHelper.routes,
+            //BoxMainScreen()
 
             //AuthMainScreen(),
           );

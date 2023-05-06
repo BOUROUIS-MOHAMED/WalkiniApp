@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/style.dart';
 
 import '../../utils/colors.dart';
 
@@ -31,14 +36,26 @@ class SendOTPScreen extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    OTPInput(),
-                    OTPInput(),
-                    OTPInput(),
-                    OTPInput(),
-                  ],
+                OTPTextField(
+
+                  length: 4,
+                  width: 1.sw,
+                  fieldWidth: 0.1.sw,
+                  style: TextStyle(
+                      fontSize: 17
+                  ),
+                  textFieldAlignment: MainAxisAlignment.spaceAround,
+                  fieldStyle: FieldStyle.underline,
+                  onCompleted: (pin) {
+                    Get.showSnackbar(
+                      GetSnackBar(
+                        title: "Error",
+                        message: 'Invalid Pin code',
+                        icon: const Icon(Icons.refresh),
+                        duration: const Duration(seconds: 3),
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 20,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:start_up_project/screens/auth/auth_main_screen.dart';
 
 import '../../../utils/colors.dart';
 import '../../../widgets/paralex_widgets/custom_button.dart';
@@ -95,9 +96,7 @@ class OnBoardingLastSubScreen extends StatelessWidget {
             text: 'Get in touch',
             minWidth: 200,
             onPressed: () {
-              controller!.animateTo(0,
-                  duration: const Duration(milliseconds: 2300),
-                  curve: Curves.ease);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => AuthMainScreen()));
             },
           ),
         ),

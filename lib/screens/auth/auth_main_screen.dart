@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:start_up_project/screens/auth/login_screen.dart';
+import 'package:start_up_project/utils/colors.dart';
 
 import '../../constants.dart';
 
@@ -54,7 +56,11 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
 
                         TextSpan(
                           text: Constants.appName,
-                          style: Theme.of(context).textTheme.headline2,
+                          style: TextStyle(
+                            fontFamily: GoogleFonts.racingSansOne().fontFamily,
+                            fontSize: 0.1.sh,
+                            color: AppColors.mainColor
+                          ),
                         ),
                         TextSpan(
                           text:"\n",
@@ -62,7 +68,11 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                         ),
                         TextSpan(
                             text: "${Constants.appNameQuote}",
-                            style: Theme.of(context).textTheme.subtitle1
+                            style:TextStyle(
+                                fontFamily: GoogleFonts.racingSansOne().fontFamily,
+                                fontSize: 0.02.sh,
+                                color: AppColors.purpleColor
+                            ),
 
 
                         ),

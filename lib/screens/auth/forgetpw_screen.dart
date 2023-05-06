@@ -11,6 +11,7 @@ class ForgetPwScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.appWhite,
       body: SafeArea(
         child: SingleChildScrollView(

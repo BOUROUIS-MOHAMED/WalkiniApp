@@ -2,12 +2,15 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:start_up_project/screens/auth/signup_screen.dart';
 import 'package:start_up_project/screens/home%20Page/home_page.dart';
 import 'package:start_up_project/widgets/socialMediaCircle.dart';
 
+import '../../controllers/auth_controller.dart';
 import '../../utils/colors.dart';
 import '../../widgets/appText.dart';
+import '../../widgets/showAwesomeSnackBar.dart';
 import 'forgetpw_screen.dart';
 
 
@@ -45,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  TextEditingController emailFieldController = TextEditingController();
+  TextEditingController emailOrPasswordFieldController = TextEditingController();
   TextEditingController passwordFieldController = TextEditingController();
   String _email = '';
   bool _isValid = false;
@@ -143,21 +146,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                           borderRadius:
                                           BorderRadius.all(Radius.circular(10))),
                                       child: TextFormField(
-                                        controller: emailFieldController,
+                                        controller: emailOrPasswordFieldController,
                                         decoration: InputDecoration(
                                             contentPadding: EdgeInsets.only(left: 15),
                                             border: InputBorder.none,
-                                            hintText: 'Enter your email'),
+                                            hintText: 'Enter your email or password'),
                                         validator: ((value) {
                                           if (value!.isEmpty) {
-                                            return "Don't let the email field empty";
+                                            return "Don't let this field empty";
                                           } else {
                                             return null;
                                           }
                                         }),
                                         onChanged: (value) => {
                                           setState(() {
-                                            _isValid = EmailValidator.validate(value);
+                                           /* _isValid = EmailValidator.validate(value);*/
+                                            if (value!.isEmpty) {
+                                              _isValid=false;
+                                            } else {
+                                              _isValid=true;
+                                            }
                                           }),
                                         },
                                       ),
@@ -266,7 +274,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       height: 0.02.sh,
                                     ),
                                     GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+
+login();
+
+                                      },
                                       child: Center(
                                         child: Container(
                                           height: 50,
@@ -401,6 +413,24 @@ bottom: 0.02.sh,
   void showSnackBar(String message) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<void> login() async {
+  if (emailOrPasswordFieldController.text.isEmpty||passwordFieldController.text.isEmpty) {
+    showAwesomeSnackBar(context, "Error", "please fill all the fields", Colors.redAccent, Colors.red);
+  }  else{
+    String email=emailOrPasswordFieldController.text.toString();
+    String pass=passwordFieldController.text.toString();
+    print(pass);
+    var conn = await Get.find<AuthController>().login(email,email,pass);
+    print(conn.message);
+    if (conn.thereIsAnError==false) {
+      showAwesomeSnackBar(context, "Done", "User loged in", AppColors.mainColor, AppColors.darkGreen);
+      print("user login successfully");
+    }else{
+      print("there is a problem : ${conn.message}");
+    }
+  }
   }
 
 

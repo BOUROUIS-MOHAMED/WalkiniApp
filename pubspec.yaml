@@ -32,12 +32,14 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.5
+  scroll_date_picker: ^3.7.0
   get: ^4.6.5
   get_storage: ^2.1.1
   flutter_native_splash: ^2.2.19
   cached_network_image: ^3.2.3
   shared_preferences: ^2.0.20
   flutter_advanced_drawer: ^1.3.4
+  country_picker: ^2.0.20
   bouncing_widget: ^2.0.0
   location: ^4.4.0
   carousel_slider: ^4.2.1
@@ -51,6 +53,8 @@ dependencies:
   firebase_auth: ^4.2.1
   firebase_database: ^10.0.7
   intl: ^0.18.0
+  loading_animation_widget: ^1.2.0+4
+  flutter_timeline: ^0.3.0
   animated_text_kit: ^4.2.2
   flutter_slidable: ^2.0.0
   #change application launcher icon plugin
@@ -61,6 +65,7 @@ dependencies:
   easy_localization: ^3.0.1
   #a floating button
   flutter_speed_dial: ^6.2.0
+  timelines: ^0.1.0
   #a beautiful swipe
   liquid_swipe: ^3.0.0
   flutter_facebook_auth: ^5.0.7
@@ -75,7 +80,7 @@ dependencies:
   adaptive_theme: ^3.2.0
   permission_handler: ^10.2.0
   line_icons: ^2.0.1
-
+  flutter_emoji: ^2.4.0
   email_validator: ^2.1.17
   babstrap_settings_screen: ^0.1.4 #allow to create settings page
   settings_ui: ^2.0.2 #allow to create settings items
@@ -83,12 +88,11 @@ dependencies:
   health: ^4.6.0 #read or write in google fit
 
   page_transition: ^2.0.9
-
   go_router: ^6.3.0
   iconsax: ^0.0.8
   animate_do: ^2.0.0
   align_positioned: ^3.0.0
-
+  otp_text_field: ^1.1.3
   card_swiper: ^2.0.4
   flutter_custom_dialog: ^1.3.0
   flutter_staggered_grid_view: ^0.6.2
@@ -98,22 +102,27 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   flutter_rating_bar: ^4.0.1
   rxdart: ^0.27.7
-  flutter_svg: ^1.1.2
+  flutter_svg: ^1.1.6
   quiver: ^3.2.1
   percent_indicator: 4.2.2
   flutter_animate: 1.0.0
   animations: ^2.0.7
   shrink_sidemenu: ^2.0.0+2-null-safety
   lottie: ^2.3.0
+  in_app_purchase: ^3.1.5
 
   pedometer: ^3.0.0 #step counter
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  awesome_snackbar_content: ^0.1.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^2.2.19
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -124,7 +133,10 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+flutter_native_splash:
+  color: '#ffffff'
+  image: assets/logo/1.png
+  
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -143,6 +155,12 @@ flutter:
     - assets/images/
     - assets/img/
     - assets/avatars/
+    - assets/types/
+    - assets/svg/m3/
+    - assets/png/m26/
+    - assets/png/
+    - assets/png/m27/
+    - assets/png/m28/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

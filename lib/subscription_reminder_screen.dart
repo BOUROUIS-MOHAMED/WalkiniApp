@@ -112,11 +112,11 @@ class _SubscriptionReminderScreenState extends State<SubscriptionReminderScreen>
                       color: Colors.black45,
 
                       fontFamily: GoogleFonts.kanit().fontFamily,
-
                     ),),
                   ],
                 ),
-              ),)
+              ),),
+
 
 
         ],
