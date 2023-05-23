@@ -1,7 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'dart:io';
+
 import 'package:get/get.dart';
-import 'package:start_up_project/models/profile_additional_information_model.dart';
-import 'package:start_up_project/models/profile_model.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:scroll_date_picker/scroll_date_picker.dart';
+import 'package:start_up_project/constants.dart';
+
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/models/test_api_model.dart';
 
 
@@ -23,20 +28,21 @@ class AuthController extends GetxController implements GetxService {
   bool get isLoading => _isLoading;
 
 
-  Future<ResponseModel> registration(ProfileModel profileModel) async {
+  Future<ResponseModel> registration(NormalUserModel profileModel) async {
     _isLoading = true;
 
     print("registration");
-    Response response = await authRepo.registration(profileModel);
+    Response response = await authRepo.registrationOfNormalUser(profileModel);
     late ResponseModel responseModel;
     print(response.body);
 
     if (response.statusCode == 200) {
-print(response.body["object"]["banDurationInSeconds"].runtimeType);
 
-      ProfileModel profileModel=ProfileModel.fromJson(response.body["object"]);
+NormalUserModel profileModel=NormalUserModel.fromJson(response.body["object"]);
       authRepo.saveUserToken(profileModel.token!);
-      responseModel = ResponseModel(thereIsAnError: false,message: response.body["message"]);
+     await GetStorage().write("profile", profileModel);
+     await  GetStorage().write(Constants.TOKEN, profileModel.token);
+      responseModel = ResponseModel(thereIsAnError: false,message: response.body["message"],object: profileModel);
 
     } else {
       responseModel = ResponseModel(thereIsAnError: true,message: response.statusText);
@@ -47,28 +53,21 @@ print(response.body["object"]["banDurationInSeconds"].runtimeType);
     return responseModel;
   }
 
-  Future<ResponseModel> registrationTheAdditionalInformation(ProfileAdditionalInformationModel profileAdditionalInformationModel) async {
+
+  Future<ResponseModel> uploadProfileImage(File image,String name) async {
     _isLoading = true;
-    print("registrationTheAdditionalInformationId");
-    Response response = await authRepo.registrationTheAdditionalInformation(profileAdditionalInformationModel);
-    late ResponseModel responseModel;
-    print(response.body);
-    print(response.body["message"]);
-
-    if (response.statusCode == 200) {
-
-      print( response.body["object"].runtimeType);
-
-      ProfileAdditionalInformationModel profileAdditionalInformationModel=ProfileAdditionalInformationModel.fromJson (response.body["object"]);
-      responseModel = ResponseModel(thereIsAnError: false,message: profileAdditionalInformationModel.id.toString());
-
-    } else {
-      responseModel = ResponseModel(thereIsAnError: true,message: response.statusText);
+    var response = await authRepo.uploadFile(image,name);
+    if (response.errorCode == "200") {
+      response.returnedBoolean=true;
+      response.thereIsAnError=false;
+      } else {
+      response.returnedBoolean=false;
+      response.thereIsAnError=true;
+      print("cant upload image");
     }
     _isLoading = false;
     update();
-    print(responseModel.message);
-    return responseModel;
+    return response;
   }
 
   Future<ResponseModel> login(String email,String phoneNumber, String password) async {
@@ -78,11 +77,12 @@ print(response.body["object"]["banDurationInSeconds"].runtimeType);
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       if (response.body["message"]=="user logged In") {
-        ProfileModel profileModel=ProfileModel.fromJson(response.body['object']);
+        NormalUserModel profileModel=NormalUserModel.fromJson(response.body['object']);
         responseModel = ResponseModel(
             thereIsAnError: false,
-            message: response.body['message'],
-            object: response.body['object']);
+            message: "user logged",
+            object: profileModel);
+        GetStorage().write("profile", profileModel);
 
       } else{
         responseModel = ResponseModel(
@@ -99,12 +99,14 @@ print(response.body["object"]["banDurationInSeconds"].runtimeType);
     return responseModel;
   }
 
+
+
   Future<BooleanServerAnswer> checkUserExist(String email,String phoneNumber) async {
     _isLoading = true;
     print("check started");
     Response response = await authRepo.checkUserExist(email,phoneNumber);
     late BooleanServerAnswer answer;
-    print(response.body["message"]);
+    print(response.body);
     if (response.statusCode == 200) {
       if (response.body["message"]=="false") {
         answer= BooleanServerAnswer.no;
@@ -113,7 +115,6 @@ print(response.body["object"]["banDurationInSeconds"].runtimeType);
       }  else {
         answer= BooleanServerAnswer.error;
       }
-
     }else{
       answer=BooleanServerAnswer.error;}
     _isLoading = false;
@@ -124,6 +125,7 @@ print(response.body["object"]["banDurationInSeconds"].runtimeType);
   saveUserNumberAndPassword(String email,String phone, String password) {
     authRepo.saveUserNumberAndPassword(email,phone, password);
   }
+
 
   bool userLoggedIn() {
     return authRepo.userLoggedIn();

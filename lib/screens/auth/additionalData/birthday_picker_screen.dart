@@ -7,21 +7,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
-import 'package:start_up_project/models/profile_model.dart';
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/screens/auth/additionalData/country_picker_screen.dart';
 import 'package:start_up_project/utils/colors.dart';
 
 
 class BirthdayPickerScreen extends StatefulWidget {
    BirthdayPickerScreen({Key? key,required this.profileModel}) : super(key: key);
-ProfileModel profileModel;
+NormalUserModel profileModel;
   @override
   State<BirthdayPickerScreen> createState() => _BirthdayPickerScreenState();
 }
 
 bool ready=false;
 
-DateTime _selectedDate = DateTime.now();
+String _selectedDate = DateTime.now().toString();
 
 
 
@@ -29,6 +29,7 @@ class _BirthdayPickerScreenState extends State<BirthdayPickerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.profileModel.toJson().toString());
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -59,7 +60,7 @@ class _BirthdayPickerScreenState extends State<BirthdayPickerScreen> {
                         height: 0.4.sh,
                         width: 0.9.sw,
                         child: CupertinoDatePicker(onDateTimeChanged: (DateTime value) { setState(() {
-                          _selectedDate=value;
+                          _selectedDate=value.toString();
                           print(_selectedDate);
                         }); },
                           mode: CupertinoDatePickerMode.date,

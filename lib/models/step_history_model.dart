@@ -1,27 +1,30 @@
 class StepHistoryModel {
   int? id;
   int? user;
-  String? description;
+  String? log;
   String? stepsValue;
   String? stepsDay;
-  DateTime? createdAt;
-DateTime? modifiedAt;
+  String? status;
+  String? createdAt;
+  String? modifiedAt;
 
   StepHistoryModel(
       {this.id,
         this.user,
-        this.description,
+        this.log,
         this.stepsValue,
         this.stepsDay,
+        this.status,
         this.createdAt,
         this.modifiedAt});
 
   StepHistoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     user = json['user'];
-    description = json['description'];
+    log = json['log'];
     stepsValue = json['stepsValue'];
     stepsDay = json['stepsDay'];
+    status = json['status'];
     createdAt = json['createdAt'];
     modifiedAt = json['modifiedAt'];
   }
@@ -30,9 +33,10 @@ DateTime? modifiedAt;
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['user'] = this.user;
-    data['description'] = this.description;
+    data['log'] = this.log;
     data['stepsValue'] = this.stepsValue;
     data['stepsDay'] = this.stepsDay;
+    data['status'] = this.status;
     data['createdAt'] = this.createdAt;
     data['modifiedAt'] = this.modifiedAt;
     return data;

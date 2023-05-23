@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:start_up_project/screens/charity/charity%20home/home_screen.dart';
+import 'package:start_up_project/screens/charity/charity%20home/charity_home_screen.dart';
+import 'package:start_up_project/screens/charity/donation_screen.dart';
 import 'package:start_up_project/screens/home%20Page/home_page.dart';
 import 'package:start_up_project/screens/home.dart';
 import 'package:start_up_project/screens/profile/profil_screen.dart';
 import 'package:start_up_project/screens/side%20menu/side_menu.dart';
+import 'package:start_up_project/screens/tracker/TrackerMainScreen.dart';
 import 'package:start_up_project/screens/wallet/WalletScreen.dart';
 
 import '../../models/tabIcon_data.dart';
@@ -151,9 +153,10 @@ class _MyHomeScreenState extends State<BottomTabBarScreen>
                   return;
                 }
                 setState(() {
-                  _tabBody = MyDiaryScreen(
+                  _tabBody = TrackerMainScreen();
+                  /*MyDiaryScreen(
                     animationController: _animationController,
-                  );
+                  );*/
                 });
               });
             } else if (index == 1 ) {
@@ -162,7 +165,7 @@ class _MyHomeScreenState extends State<BottomTabBarScreen>
                   return;
                 }
                 setState(() {
-                  _tabBody = Dashboard();
+                  _tabBody = DonationScreen("5000");
 
                 });
               });

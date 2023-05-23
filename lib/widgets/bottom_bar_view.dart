@@ -4,6 +4,8 @@ import 'dart:math' as math;
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:start_up_project/constants.dart';
 
 
 import '../models/tabIcon_data.dart';
@@ -76,7 +78,7 @@ class _BottomBarViewState extends State<BottomBarView>
               child: Column(
                 children: [
                   SizedBox(
-                    height: 62,
+                    height: Constants.bottomTabBarHeight,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
                       child: Row(

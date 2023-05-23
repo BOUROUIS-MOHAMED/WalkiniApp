@@ -9,14 +9,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
-import 'package:start_up_project/models/profile_model.dart';
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/screens/auth/additionalData/goals_selector_screen.dart';
 import 'package:start_up_project/utils/colors.dart';
+import 'package:start_up_project/widgets/showAwesomeSnackBar.dart';
 
 
 class CountryPickerScreen extends StatefulWidget {
    CountryPickerScreen({Key? key,required this.profileModel}) : super(key: key);
-ProfileModel profileModel =ProfileModel();
+NormalUserModel profileModel =NormalUserModel();
   @override
   State<CountryPickerScreen> createState() => _CountryPickerScreenState();
 }
@@ -24,16 +25,11 @@ bool modifier=true;
 Country? _country;
 bool ready=false;
 
-
-
-DateTime _selectedDate = DateTime.now();
-
-
-
 class _CountryPickerScreenState extends State<CountryPickerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.profileModel.toJson().toString());
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -132,13 +128,19 @@ class _CountryPickerScreenState extends State<CountryPickerScreen> {
                 Flexible(
                   child: GestureDetector(
                     onTap: (){
-                      if (_country!.name.isNotEmpty) {
-                        ready=true;
-                        widget.profileModel.nationality=_country!.name;
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => GoalsSelectorScreen(profileModel: widget.profileModel),));
+                      if (_country!=null) {
+                        if (_country!.name.isNotEmpty) {
+                          ready=true;
+                          widget.profileModel.nationality=_country!.name;
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => GoalsSelectorScreen(profileModel: widget.profileModel),));
+                        }  else{
+                          ready=false;
+                          showAwesomeSnackBar(context, "Error", "Please select a country", Colors.cyan, Colors.cyanAccent);
+                        }
                       }  else{
-                        ready=false;
+                        showAwesomeSnackBar(context, "Error", "Please select a country", Colors.cyan, Colors.cyanAccent);
                       }
+
                     },
                     child: Container(
 

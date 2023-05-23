@@ -6,15 +6,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icon.dart';
-import 'package:start_up_project/models/profile_additional_information_model.dart';
-import 'package:start_up_project/models/profile_model.dart';
+
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/screens/auth/additionalData/height_picker_screen.dart';
+import 'package:start_up_project/screens/profile/profil_screen.dart';
 import 'package:start_up_project/utils/colors.dart';
+import 'package:start_up_project/widgets/showAwesomeSnackBar.dart';
 
 
 class GoalsSelectorScreen extends StatefulWidget {
    GoalsSelectorScreen({Key? key,required this.profileModel}) : super(key: key);
-  ProfileModel profileModel=ProfileModel();
+   NormalUserModel profileModel=NormalUserModel();
 
   @override
   State<GoalsSelectorScreen> createState() => _GoalsSelectorScreenState();
@@ -47,6 +49,7 @@ class _GoalsSelectorScreenState extends State<GoalsSelectorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.profileModel.toJson().toString());
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -128,11 +131,12 @@ class _GoalsSelectorScreenState extends State<GoalsSelectorScreen> {
                   child: GestureDetector(
                     onTap: (){
                       if (valid&&selectedContainer<3) {
-ProfileAdditionalInformationModel pDIM =ProfileAdditionalInformationModel(
-  goals: goals[selectedContainer]
-);
-Navigator.of(context).push(MaterialPageRoute(builder: (context) => HeightPickerScreen(profileModel: widget.profileModel, profileAdditionalInformationModel: pDIM,),));
+                       widget.profileModel.goals= goals[selectedContainer];
 
+Navigator.of(context).push(MaterialPageRoute(builder: (context) => HeightPickerScreen(profileModel: widget.profileModel),));
+
+                      }else{
+                        showAwesomeSnackBar(context, "Error", "Please select a goal", Colors.grey, Colors.black);
                       }
                     },
                     child: Container(

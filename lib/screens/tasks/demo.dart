@@ -7,12 +7,12 @@ import 'demo_data.dart';
 import 'rounded_shadow.dart';
 import 'task_card.dart';
 
-class DrinkRewardsListDemo extends StatefulWidget {
+class AchievementScreen extends StatefulWidget {
   @override
-  _DrinkRewardsListDemoState createState() => _DrinkRewardsListDemoState();
+  _AchievementScreenState createState() => _AchievementScreenState();
 }
 
-class _DrinkRewardsListDemoState extends State<DrinkRewardsListDemo> {
+class _AchievementScreenState extends State<AchievementScreen> {
   double _listPadding = 20;
   late TasksData _selectedDrink;
   ScrollController _scrollController = ScrollController();

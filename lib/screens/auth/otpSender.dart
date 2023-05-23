@@ -22,7 +22,7 @@ class SendOTPScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  'We have sent you an OTP to your Mobile',
+                  'We have sent you an email ',
                   style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 ),
@@ -30,7 +30,7 @@ class SendOTPScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "Please check your mobile number 071*****12 continue to reset your password",
+                  "Please check your email mo********************om and continue to reset your password",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(

@@ -6,8 +6,10 @@ class PlaceModel {
   String? description;
   int? rarity;
   String? image;
-  DateTime? createdAt;
-DateTime? modifiedAt;
+  Null? coinPrize;
+  Null? owner;
+  Null? createdAt;
+  Null? modifiedAt;
 
   PlaceModel(
       {this.id,
@@ -17,6 +19,8 @@ DateTime? modifiedAt;
         this.description,
         this.rarity,
         this.image,
+        this.coinPrize,
+        this.owner,
         this.createdAt,
         this.modifiedAt});
 
@@ -28,6 +32,8 @@ DateTime? modifiedAt;
     description = json['description'];
     rarity = json['rarity'];
     image = json['image'];
+    coinPrize = json['coinPrize'];
+    owner = json['owner'];
     createdAt = json['createdAt'];
     modifiedAt = json['modifiedAt'];
   }
@@ -41,6 +47,8 @@ DateTime? modifiedAt;
     data['description'] = this.description;
     data['rarity'] = this.rarity;
     data['image'] = this.image;
+    data['coinPrize'] = this.coinPrize;
+    data['owner'] = this.owner;
     data['createdAt'] = this.createdAt;
     data['modifiedAt'] = this.modifiedAt;
     return data;

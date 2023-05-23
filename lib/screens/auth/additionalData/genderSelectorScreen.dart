@@ -4,14 +4,14 @@ import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:start_up_project/models/profile_model.dart';
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/screens/auth/additionalData/birthday_picker_screen.dart';
 import 'package:start_up_project/utils/colors.dart';
 
 
 class GenderSelectorScreen extends StatefulWidget {
    GenderSelectorScreen({Key? key,required this.profileModel}) : super(key: key);
-ProfileModel profileModel=ProfileModel();
+   NormalUserModel profileModel=NormalUserModel();
   @override
   State<GenderSelectorScreen> createState() => _GenderSelectorScreenState();
 }
@@ -44,7 +44,9 @@ var heart  = Emoji('heart', '❤️');
 
   @override
   Widget build(BuildContext context) {
+    print(widget.profileModel.toJson().toString());
     return  Scaffold(
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

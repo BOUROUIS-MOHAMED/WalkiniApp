@@ -1,119 +1,102 @@
 
-import 'dart:io';
+import 'dart:convert';
+import 'dart:ui';
 
+import 'package:background_fetch/background_fetch.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:json_theme/json_theme.dart';
 import 'package:pedometer/pedometer.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:start_up_project/BranchScreen.dart';
-import 'package:start_up_project/screens/auth/additionalData/birthday_picker_screen.dart';
-import 'package:start_up_project/screens/auth/additionalData/country_picker_screen.dart';
-import 'package:start_up_project/screens/auth/additionalData/genderSelectorScreen.dart';
-import 'package:start_up_project/screens/auth/additionalData/goals_selector_screen.dart';
-import 'package:start_up_project/screens/auth/additionalData/height_picker_screen.dart';
-import 'package:start_up_project/screens/auth/additionalData/loading_screen.dart';
-import 'package:start_up_project/screens/auth/additionalData/physical_problem_picker_screen.dart';
-import 'package:start_up_project/screens/auth/additionalData/trial_version_screen.dart';
-import 'package:start_up_project/screens/auth/forgot_password_screen.dart';
-import 'package:start_up_project/screens/auth/otpSender.dart';
+import 'package:provider/provider.dart';
+import 'package:start_up_project/PartnerWalletPage.dart';
+import 'package:start_up_project/firebase_options.dart';
+
+import 'package:start_up_project/models/normal_user_model.dart';
+import 'package:start_up_project/noti.dart';
+import 'package:start_up_project/screens/auth/additionalData/image_picker_screen.dart';
+import 'package:start_up_project/screens/auth/signup_screen.dart';
 import 'package:start_up_project/screens/box_screen.dart';
-import 'package:start_up_project/screens/checkout/checkout_screen.dart';
-import 'package:start_up_project/screens/home.dart';
-import 'package:start_up_project/screens/on_boarding_screens/on_boarding_screen.dart';
-import 'package:start_up_project/screens/permissions/permission%20widgets/activity_tracker_permission_widget.dart';
-import 'package:start_up_project/screens/route/route_helper.dart';
-
-
+import 'package:start_up_project/screens/home%20Page/home_page.dart';
+import 'package:start_up_project/screens/settings/setting_main_page.dart';
 import 'package:start_up_project/screens/tab%20Bar/mainScreen.dart';
-import 'package:start_up_project/subscription_reminder_screen.dart';
-import 'package:start_up_project/screens/unbox_screen.dart';
+import 'package:start_up_project/screens/tracker/TrackerMainScreen.dart';
+import 'package:start_up_project/screens/tracker/WorkoutStartScreen.dart';
+import 'package:start_up_project/screens/tracker/page_24.dart';
+import 'package:start_up_project/screens/tracker/page_27.dart';
+import 'package:start_up_project/screens/white_screen.dart';
+import 'package:start_up_project/utils/model_theme.dart';
+import 'BranchScreen.dart';
 import 'helper/dependencies.dart' as dep;
 
 import 'constants.dart';
 
+
+@pragma('vm:entry-point')
+void backgroundFetchHeadlessTask(HeadlessTask task) async {
+  String taskId = task.taskId;
+  bool isTimeout = task.timeout;
+  if (isTimeout) {
+    print("[BackgroundFetch] Headless task timed-out: $taskId");
+    BackgroundFetch.finish(taskId);
+    return;
+  }
+  print('[BackgroundFetch] Headless event received.');
+  // Do your work here...
+  BackgroundFetch.finish(taskId);
+}
+
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin=FlutterLocalNotificationsPlugin();
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
 
-
+  final themeL=await rootBundle.loadString('assets/lightThemeMode.json');
+  final themeJsonL =jsonDecode(themeL) ;
+  final themeD=await rootBundle.loadString('assets/darkThemeMode.json');
+  final themeJsonD =jsonDecode(themeD) ;
+  final darkTheme=ThemeDecoder.decodeThemeData(themeJsonD);
+  final lightTheme=ThemeDecoder.decodeThemeData(themeJsonL);
+  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform) ;
   await dep.init();
   await GetStorage.init();
 
-
-
-
+  await Notifi.initialise(flutterLocalNotificationsPlugin);
+  await TrackerMainScreen.initializeService();
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.bottom]);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     FlutterNativeSplash.remove();
-    runApp( MyApp());
+
+    runApp( MyApp(darkTheme: darkTheme!,lightTheme: lightTheme!,));
   });
+
+
+
+
+
 }
 class MyApp extends StatefulWidget {
+  final ThemeData darkTheme;
+  final ThemeData lightTheme;
+
+  const MyApp({super.key, required this.darkTheme, required this.lightTheme, });
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  late Stream<StepCount> _stepCountStream;
-  late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _status = '?', _steps = '?';
 
-  @override
-  void initState() {
-    super.initState();
-   /* initPlatformState();*/
-  }
-
-/*
-  void onStepCount(StepCount event) {
-    print(event);
-    setState(() {
-      _steps = event.steps.toString();
-      GetStorage().write("steps", _steps);
-    });
-  }
-
-  void onPedestrianStatusChanged(PedestrianStatus event) {
-    print(event);
-    setState(() {
-      _status = event.status;
-      GetStorage().write("pedestrianStatus", _status);
-    });
-  }
-
-  void onPedestrianStatusError(error) {
-    print('onPedestrianStatusError: $error');
-    setState(() {
-      _status = 'Pedestrian Status not available';
-    });
-    print(_status);
-  }
-
-  void onStepCountError(error) {
-    print('onStepCountError: $error');
-    setState(() {
-      _steps = 'Step Count not available';
-    });
-  }
-
-  void initPlatformState() {
-    _pedestrianStatusStream = Pedometer.pedestrianStatusStream;
-    _pedestrianStatusStream
-        .listen(onPedestrianStatusChanged)
-        .onError(onPedestrianStatusError);
-
-    _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream.listen(onStepCount).onError(onStepCountError);
-
-    if (!mounted) return;
-  }*/
   @override
   Widget build(BuildContext context) {
  /* permissionHandler();*/
@@ -124,32 +107,25 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         {
 
-          return GetMaterialApp(
-            title: 'Auth Screen 1',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              brightness: Brightness.light,
-              primaryColor: kPrimaryColor,
+          return ChangeNotifierProvider(
+              create: (_) => ModelTheme(),
+            child: Consumer<ModelTheme>(
+              builder: (context, ModelTheme themeNotifier, child) {
+                return GetMaterialApp(
+                  title: 'Auth Screen 1',
+                  debugShowCheckedModeBanner: false,
+                    theme: themeNotifier.isDark
+                        ? widget.darkTheme
+                        : widget.lightTheme,
+                 // initialRoute: RouteHelper.getOnBoardingScreen(),
+                //  getPages: RouteHelper.routes,
+                  home: BottomTabBarScreen()
+                  //BoxMainScreen()
 
-              textTheme: TextTheme(
-
-                button: TextStyle(color: kPrimaryColor),
-                headline1:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
-              ),
-              inputDecorationTheme: InputDecorationTheme(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.white.withOpacity(.2),
-                  ),
-                ),
-              ),
+                  //AuthMainScreen(),
+                );
+              }
             ),
-            initialRoute: RouteHelper.getBranchScreen(),
-            getPages: RouteHelper.routes,
-            //BoxMainScreen()
-
-            //AuthMainScreen(),
           );
         }
       });

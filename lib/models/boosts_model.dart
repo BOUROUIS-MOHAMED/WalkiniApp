@@ -1,22 +1,22 @@
-class BoostsModel {
+class BoostModel {
   int? id;
   String? name;
   String? description;
   String? image;
-  Duration? duration;
-  String? price;
-  String? modifiedAttributes;
+  int? boostDurationInSeconds;
+  double? price;
+  int? modifiedAttributes;
   bool? boostInBoxOrNot;
   int? boostRarity;
-  DateTime? createdAt;
-DateTime? modifiedAt;
+  String? createdAt;
+  String? modifiedAt;
 
-  BoostsModel(
+  BoostModel(
       {this.id,
         this.name,
         this.description,
         this.image,
-        this.duration,
+        this.boostDurationInSeconds,
         this.price,
         this.modifiedAttributes,
         this.boostInBoxOrNot,
@@ -24,12 +24,12 @@ DateTime? modifiedAt;
         this.createdAt,
         this.modifiedAt});
 
-  BoostsModel.fromJson(Map<String, dynamic> json) {
+  BoostModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
     image = json['image'];
-    duration = json['duration'];
+    boostDurationInSeconds = json['boostDurationInSeconds'];
     price = json['price'];
     modifiedAttributes = json['modifiedAttributes'];
     boostInBoxOrNot = json['boostInBoxOrNot'];
@@ -44,7 +44,7 @@ DateTime? modifiedAt;
     data['name'] = this.name;
     data['description'] = this.description;
     data['image'] = this.image;
-    data['duration'] = this.duration;
+    data['boostDurationInSeconds'] = this.boostDurationInSeconds;
     data['price'] = this.price;
     data['modifiedAttributes'] = this.modifiedAttributes;
     data['boostInBoxOrNot'] = this.boostInBoxOrNot;

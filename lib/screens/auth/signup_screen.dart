@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:start_up_project/controllers/auth_controller.dart';
-import 'package:start_up_project/models/profile_model.dart';
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/screens/auth/additionalData/genderSelectorScreen.dart';
 import 'package:start_up_project/screens/auth/login_screen.dart';
 import 'package:start_up_project/screens/auth/special_user_signup_screen.dart';
@@ -50,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Container(
                 width: 0.9.sw,
                 height: 0.5.sh,
-                child: Container(),
+                child: CircularProgressIndicator(),
           ),
         ));
       },
@@ -586,20 +586,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
    });
    BooleanServerAnswer userAllowedToCreateAccount=
    await Get.find<AuthController>().checkUserExist(emailFieldText, phoneFieldText);
+
   setState(() {
      isLoading=false;
    });
 
    if (userAllowedToCreateAccount==BooleanServerAnswer.no) {
      print("new allowed");
-     ProfileModel profileModel =
-     ProfileModel(
+     NormalUserModel profileModel =
+     NormalUserModel(
        firstName: firstNameFieldText,
        lastName: lastNameFieldText,
        email: emailFieldText,
        secretPassword: passwordFieldText,
        phoneNumber: phoneFieldText,
-       
      );
    Navigator.of(context).push(MaterialPageRoute(builder: (context) => GenderSelectorScreen(profileModel: profileModel),));
    }  else if(userAllowedToCreateAccount==BooleanServerAnswer.yes){

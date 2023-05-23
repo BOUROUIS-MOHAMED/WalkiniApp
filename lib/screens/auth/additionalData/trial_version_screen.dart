@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icon.dart';
+import 'package:start_up_project/screens/permissions/permission%20widgets/activity_tracker_permission_widget.dart';
 import 'package:start_up_project/utils/colors.dart';
 import 'package:timelines/timelines.dart';
 
@@ -36,11 +37,22 @@ class _TrialVersionScreenState extends State<TrialVersionScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         foregroundColor: Colors.transparent,
+        leading: Icon(CupertinoIcons.chevron_back,color: Colors.black,),
+        actions: [
+          Padding(
+            padding:  EdgeInsets.only(right: 0.07.sw),
+            child: GestureDetector(
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActivityTrackerPermissionWidget(),));
+                },
+                child: Icon(Icons.close,color: Colors.black.withOpacity(0.3),)),
+          )
+        ],
 
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
+        child: SizedBox(
             width: 1.sw,
             height: 1.sh,
             child:Column(
@@ -48,13 +60,15 @@ class _TrialVersionScreenState extends State<TrialVersionScreen> {
                 Expanded(
                   flex: 6,
                   child: Column(
-                    children: [
-                      Text("Active your pass right now!",
 
-                        textAlign: TextAlign.center,
+                    children: [
+                      Text("Active your pass right now!\nto earn free week",
+
+
+                        textAlign: TextAlign.left,
                         style: GoogleFonts.farro(
                             fontWeight: FontWeight.w400,
-                            fontSize: 0.03.sh
+                            fontSize: 0.025.sh
                         ),),
                       Center(
                         child: Container(
@@ -91,7 +105,7 @@ class _TrialVersionScreenState extends State<TrialVersionScreen> {
                           borderRadius: BorderRadius.circular(55)
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Activate the trial version"),
                         FlutterSwitch(

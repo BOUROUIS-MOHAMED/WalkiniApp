@@ -10,6 +10,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:start_up_project/screens/settings/single%20page%20settings/settings_picker.dart';
+import 'package:start_up_project/utils/colors.dart';
+import 'package:start_up_project/widgets/showAwesomeSnackBar.dart';
 
 import '../../setting_main_page.dart';
 
@@ -30,9 +32,9 @@ class _UserInformationSettingsState
 
 
   bool handicap = false;
-  bool useForAnalystic=true;
-  bool shareData=true;
-  bool specificAds=true;
+  bool useForAnalyse=false;
+  bool shareData=false;
+  bool specificAds=false;
 
 
 
@@ -51,7 +53,7 @@ class _UserInformationSettingsState
 
                       childCurrent: this.widget,
                       child: SettingsMainPage())),
-              child: Icon(CupertinoIcons.chevron_left,color: Colors.black,)),
+              child: Icon(CupertinoIcons.chevron_left,color:AppColors.mainColor,)),
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
@@ -101,7 +103,7 @@ class _UserInformationSettingsState
               ],
             ),
             SettingsSection(
-              title: Text('More INFORMATION'),
+              title: Text('MORE INFORMATION'),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   leading: Icon(Icons.person),
@@ -138,6 +140,9 @@ class _UserInformationSettingsState
                   onToggle: (value) {
                     setState(() {
                       handicap = value;
+
+                        showNormalSnackBar(context, "This feature will come in the next update", AppColors.mainColor, Colors.white);
+
                     });
                   },
                   initialValue: handicap,
@@ -151,8 +156,10 @@ class _UserInformationSettingsState
               title: Text('ACCOUNT MANAGEMENT'),
               tiles: <SettingsTile>[
                 SettingsTile.switchTile(
-                  onToggle: (_) {},
-                  initialValue: useForAnalystic,
+                  onToggle: (_) {
+                    showNormalSnackBar(context, "This feature will come in the next update", AppColors.mainColor, Colors.white);
+                  },
+                  initialValue: useForAnalyse,
                   leading: Icon(Icons.analytics_outlined),
                   title: Text('Use data in analystic purpose'),
                   description: Text(
@@ -160,7 +167,9 @@ class _UserInformationSettingsState
                   ),
                 ),
                 SettingsTile.switchTile(
-                  onToggle: (_) {},
+                  onToggle: (_) {
+                    showNormalSnackBar(context, "This feature will come in the next update", AppColors.mainColor, Colors.white);
+                  },
                   initialValue: shareData,
                   leading: Icon(Icons.share_rounded),
                   title: Text('share data with companys'),
@@ -169,7 +178,9 @@ class _UserInformationSettingsState
                   ),
                 ),
                 SettingsTile.switchTile(
-                  onToggle: (_) {},
+                  onToggle: (_) {
+                    showNormalSnackBar(context, "This feature will come in the next update", AppColors.mainColor, Colors.white);
+                  },
                   initialValue: specificAds,
                   leading: Icon(Icons.ads_click),
                   title: Text('Custom ads'),
@@ -180,16 +191,26 @@ class _UserInformationSettingsState
                 SettingsTile.navigation(
                   leading: Icon(CupertinoIcons.restart),
                   title: Text('Reset Data'),
+                  onPressed: (x) {
+                    showNormalSnackBar(context, "This feature will come in the next update", AppColors.mainColor, Colors.white);
+                  },
                 ),
                 SettingsTile.navigation(
                   leading: Icon(CupertinoIcons.trash_fill),
                   title: Text('Delete Data'),
+                  onPressed: (x) {
+                    showNormalSnackBar(context, "This feature will come in the next update", AppColors.mainColor, Colors.white);
+                  },
                 ),
                 SettingsTile.navigation(
                   leading: Icon(CupertinoIcons.clear),
                   title: Text('Delete Account',style: TextStyle(
+
                     color: Colors.red
                   ),),
+                  onPressed: (x) {
+                    showNormalSnackBar(context, "This feature will come in the next update", AppColors.mainColor, Colors.white);
+                  },
 
                 ),
 

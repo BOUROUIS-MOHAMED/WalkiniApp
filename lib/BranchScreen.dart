@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:start_up_project/models/profile_model.dart';
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/models/test_api_model.dart';
 import 'package:start_up_project/screens/Shop/cart_screen.dart';
 import 'package:start_up_project/screens/Shop/favorite_screen.dart';
@@ -14,7 +14,7 @@ import 'package:start_up_project/screens/auth/login_screen.dart';
 import 'package:start_up_project/screens/auth/otpSender.dart';
 import 'package:start_up_project/screens/auth/signup_screen.dart';
 import 'package:start_up_project/screens/auth/special_user_signup_screen.dart';
-import 'package:start_up_project/screens/charity/charity%20home/home_screen.dart';
+import 'package:start_up_project/screens/charity/charity%20home/charity_home_screen.dart';
 import 'package:start_up_project/screens/charity/donation_screen.dart';
 import 'package:start_up_project/screens/charity/search/search_screen.dart';
 import 'package:start_up_project/screens/checkout/checkout_screen.dart';
@@ -74,7 +74,7 @@ List destinationPage=[
   ProductListScreen(),
   FavoriteScreen(),
   CartScreen(),
-  DrinkRewardsListDemo(),
+  AchievementScreen(),
   WalletScreen(),
   UnboxScreen(),
   DonateScreen(name: 'hame', avatar: '1',)
@@ -91,7 +91,7 @@ class _BranchScreenState extends State<BranchScreen> {
           color: Colors.red,
 
           onPressed: (){
-            ProfileModel testApiModel=ProfileModel(
+            NormalUserModel testApiModel=NormalUserModel(
 
             );
             Get.find<AuthController>().registration(testApiModel);

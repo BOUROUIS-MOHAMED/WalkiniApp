@@ -42,6 +42,7 @@ class _CarouselSliderState extends State<CarouselSlider> {
           ),
         ),
         SmoothIndicator(
+          size: Size(50,50),
           effect:  WormEffect(
 
             dotHeight: 0.005.sh,

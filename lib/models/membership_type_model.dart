@@ -2,22 +2,20 @@ class MembershipTypeModel {
   int? id;
   String? name;
   String? description;
-  String? color;
-  String? price;
-  String? badge;
-  Duration? duration;
-  String? modifiedAttribute;
-  DateTime? createdAt;
-DateTime? modifiedAt;
+  double? price;
+  int? badge;
+  int? membershipDurationInMonths;
+  int? modifiedAttribute;
+  String? createdAt;
+  String? modifiedAt;
 
   MembershipTypeModel(
       {this.id,
         this.name,
         this.description,
-        this.color,
         this.price,
         this.badge,
-        this.duration,
+        this.membershipDurationInMonths,
         this.modifiedAttribute,
         this.createdAt,
         this.modifiedAt});
@@ -26,10 +24,9 @@ DateTime? modifiedAt;
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    color = json['color'];
     price = json['price'];
     badge = json['badge'];
-    duration = json['duration'];
+    membershipDurationInMonths = json['membershipDurationInMonths'];
     modifiedAttribute = json['modifiedAttribute'];
     createdAt = json['createdAt'];
     modifiedAt = json['modifiedAt'];
@@ -40,10 +37,9 @@ DateTime? modifiedAt;
     data['id'] = this.id;
     data['name'] = this.name;
     data['description'] = this.description;
-    data['color'] = this.color;
     data['price'] = this.price;
     data['badge'] = this.badge;
-    data['duration'] = this.duration;
+    data['membershipDurationInMonths'] = this.membershipDurationInMonths;
     data['modifiedAttribute'] = this.modifiedAttribute;
     data['createdAt'] = this.createdAt;
     data['modifiedAt'] = this.modifiedAt;

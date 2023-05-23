@@ -2,8 +2,8 @@ class ActionModel {
   int? id;
   String? name;
   String? route;
-  DateTime? createdAt;
-  DateTime? modifiedAt;
+  String? createdAt;
+  String? modifiedAt;
 
   ActionModel(
       {this.id, this.name, this.route, this.createdAt, this.modifiedAt});

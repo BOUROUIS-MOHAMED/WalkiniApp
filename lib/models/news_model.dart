@@ -5,11 +5,13 @@ class NewsModel {
   String? newsImage;
   String? country;
   String? color;
-  String? priority;
+  int? priority;
   bool? sponsored;
+  bool? newsIsInfo;
+  bool? newsIsFilteredByCountry;
   int? action;
-  DateTime? createdAt;
-  DateTime? modifiedAt;
+  String? createdAt;
+  String? modifiedAt;
 
   NewsModel(
       {this.id,
@@ -20,6 +22,8 @@ class NewsModel {
         this.color,
         this.priority,
         this.sponsored,
+        this.newsIsInfo,
+        this.newsIsFilteredByCountry,
         this.action,
         this.createdAt,
         this.modifiedAt});
@@ -33,6 +37,8 @@ class NewsModel {
     color = json['color'];
     priority = json['priority'];
     sponsored = json['sponsored'];
+    newsIsInfo = json['newsIsInfo'];
+    newsIsFilteredByCountry = json['newsIsFilteredByCountry'];
     action = json['action'];
     createdAt = json['createdAt'];
     modifiedAt = json['modifiedAt'];
@@ -48,6 +54,8 @@ class NewsModel {
     data['color'] = this.color;
     data['priority'] = this.priority;
     data['sponsored'] = this.sponsored;
+    data['newsIsInfo'] = this.newsIsInfo;
+    data['newsIsFilteredByCountry'] = this.newsIsFilteredByCountry;
     data['action'] = this.action;
     data['createdAt'] = this.createdAt;
     data['modifiedAt'] = this.modifiedAt;

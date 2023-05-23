@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:start_up_project/screens/charity/charity%20home/charity_home_screen.dart';
 import 'package:start_up_project/screens/permissions/permission%20widgets/activity_tracker_permission_widget.dart';
 
 import '../../../utils/colors.dart';
@@ -53,10 +54,10 @@ class _LocationPermissionWidgetState extends State<LocationPermissionWidget> {
 
                 children: [
                   LinearProgressBar(
-                    maxSteps: 6,
+                    maxSteps: 3,
                     progressType: LinearProgressBar.progressTypeLinear,
                     // Use Linear progress
-                    currentStep: 4,
+                    currentStep: 2,
                     progressColor: AppColors.appGreen,
                     minHeight: 0.01.sh,
                     backgroundColor: Colors.grey,
@@ -108,6 +109,7 @@ class _LocationPermissionWidgetState extends State<LocationPermissionWidget> {
                                             '\n'
                                             'Location Permission $message'
                                         ,
+
                                         textAlign: TextAlign.center,
                                         style:
                                         GoogleFonts.outfit(
@@ -192,7 +194,7 @@ permissionHandler();
     if (status.isGranted) {
       setState(() {
         locationPermissionStatus=true;
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActivityTrackerPermissionWidget(),));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CharityHomeScreen(),));
       });
     }else {
       setState(() async {

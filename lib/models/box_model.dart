@@ -6,14 +6,14 @@ class BoxModel {
   String? coins;
   String? boosts;
   String? coupons;
-  String? coinPrice;
-  String? emeraldPrice;
-  bool? buyInEmerald;
-  Duration? duration;
+  double? coinPrice;
+  double? emeraldPrice;
+  bool buyInEmerald=false;
   int? availableQuantity;
   int? leftQuantity;
-  DateTime? createdAt;
-DateTime? modifiedAt;
+  String? createdAt;
+  String? modifiedAt;
+  bool? active;
 
   BoxModel(
       {this.id,
@@ -25,12 +25,12 @@ DateTime? modifiedAt;
         this.coupons,
         this.coinPrice,
         this.emeraldPrice,
-        this.buyInEmerald,
-        this.duration,
+        required this.buyInEmerald,
         this.availableQuantity,
         this.leftQuantity,
         this.createdAt,
-        this.modifiedAt});
+        this.modifiedAt,
+        this.active});
 
   BoxModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,11 +43,11 @@ DateTime? modifiedAt;
     coinPrice = json['coinPrice'];
     emeraldPrice = json['emeraldPrice'];
     buyInEmerald = json['buyInEmerald'];
-    duration = json['duration'];
     availableQuantity = json['availableQuantity'];
     leftQuantity = json['leftQuantity'];
     createdAt = json['createdAt'];
     modifiedAt = json['modifiedAt'];
+    active = json['active'];
   }
 
   Map<String, dynamic> toJson() {
@@ -62,11 +62,11 @@ DateTime? modifiedAt;
     data['coinPrice'] = this.coinPrice;
     data['emeraldPrice'] = this.emeraldPrice;
     data['buyInEmerald'] = this.buyInEmerald;
-    data['duration'] = this.duration;
     data['availableQuantity'] = this.availableQuantity;
     data['leftQuantity'] = this.leftQuantity;
     data['createdAt'] = this.createdAt;
     data['modifiedAt'] = this.modifiedAt;
+    data['active'] = this.active;
     return data;
   }
 }

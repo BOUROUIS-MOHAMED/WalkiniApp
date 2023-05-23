@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "569988390716",
+    "project_id": "walkini-f6669",
+    "storage_bucket": "walkini-f6669.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569988390716:android:4d153f10c7cb6ec1604839",
+        "android_client_info": {
+          "package_name": "com.BourouisMohamedAmine.start_up_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569988390716-c5985vkoef86i6oqdamd29vio5h64coa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8QDP3X5EZYiUgXZgZELjU5wmdk50hh-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569988390716-c5985vkoef86i6oqdamd29vio5h64coa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

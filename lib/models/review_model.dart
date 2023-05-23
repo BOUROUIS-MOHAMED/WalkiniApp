@@ -1,10 +1,10 @@
 class ReviewModel {
-  Null? id;
+  int? id;
   int? userId;
   int? reviewedProduct;
-  String? reviewValue;
-  DateTime? createdAt;
-DateTime? modifiedAt;
+  double? reviewValue;
+  String? createdAt;
+  String? modifiedAt;
 
   ReviewModel(
       {this.id,

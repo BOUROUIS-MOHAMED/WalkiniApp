@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:start_up_project/screens/auth/auth_main_screen.dart';
 
+import '../../../constants.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/paralex_widgets/custom_button.dart';
 import '../../../widgets/paralex_widgets/svg_label.dart';
@@ -96,6 +98,7 @@ class OnBoardingLastSubScreen extends StatelessWidget {
             text: 'Get in touch',
             minWidth: 200,
             onPressed: () {
+              GetStorage().write(Constants.userAlreadyOpenTheAppForTheFirstTimeKey,true);
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => AuthMainScreen()));
             },
           ),

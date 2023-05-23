@@ -2,22 +2,32 @@ class CharityModel {
   int? id;
   String? title;
   String? image;
-  String? amount;
   String? description;
+  String? target;
+  String? score;
+  bool? inEmerald;
+  int? category;
   String? currentAmount;
-  DateTime? limitTime;
+  String? limitDay;
+  double? latitude;
+  double? longitude;
   int? owner;
-  DateTime? createdAt;
-DateTime? modifiedAt;
+  String? createdAt;
+  String? modifiedAt;
 
   CharityModel(
       {this.id,
         this.title,
         this.image,
-        this.amount,
         this.description,
+        this.target,
+        this.score,
+        this.inEmerald,
+        this.category,
         this.currentAmount,
-        this.limitTime,
+        this.limitDay,
+        this.latitude,
+        this.longitude,
         this.owner,
         this.createdAt,
         this.modifiedAt});
@@ -26,10 +36,15 @@ DateTime? modifiedAt;
     id = json['id'];
     title = json['title'];
     image = json['image'];
-    amount = json['amount'];
     description = json['description'];
+    target = json['target'];
+    score = json['score'];
+    inEmerald = json['inEmerald'];
+    category = json['category'];
     currentAmount = json['currentAmount'];
-    limitTime = json['limitTime'];
+    limitDay = json['limitDay'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
     owner = json['owner'];
     createdAt = json['createdAt'];
     modifiedAt = json['modifiedAt'];
@@ -40,10 +55,15 @@ DateTime? modifiedAt;
     data['id'] = this.id;
     data['title'] = this.title;
     data['image'] = this.image;
-    data['amount'] = this.amount;
     data['description'] = this.description;
+    data['target'] = this.target;
+    data['score'] = this.score;
+    data['inEmerald'] = this.inEmerald;
+    data['category'] = this.category;
     data['currentAmount'] = this.currentAmount;
-    data['limitTime'] = this.limitTime;
+    data['limitDay'] = this.limitDay;
+    data['latitude'] = this.latitude;
+    data['longitude'] = this.longitude;
     data['owner'] = this.owner;
     data['createdAt'] = this.createdAt;
     data['modifiedAt'] = this.modifiedAt;

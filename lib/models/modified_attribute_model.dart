@@ -1,14 +1,13 @@
-import 'dart:ffi';
-
 class ModifiedAttributeModel {
   int? id;
   String? name;
   int? maxStepsLimit;
-  Double? stepsMultiplayer;
+  double? stepsMultiplayer;
   int? maxBoxPerDay;
   int? maxVisitPerDay;
-  DateTime? createdAt;
-DateTime? modifiedAt;
+  int? maxAskForConvertPerDay;
+  String? createdAt;
+  String? modifiedAt;
 
   ModifiedAttributeModel(
       {this.id,
@@ -17,6 +16,7 @@ DateTime? modifiedAt;
         this.stepsMultiplayer,
         this.maxBoxPerDay,
         this.maxVisitPerDay,
+        this.maxAskForConvertPerDay,
         this.createdAt,
         this.modifiedAt});
 
@@ -27,6 +27,7 @@ DateTime? modifiedAt;
     stepsMultiplayer = json['stepsMultiplayer'];
     maxBoxPerDay = json['maxBoxPerDay'];
     maxVisitPerDay = json['maxVisitPerDay'];
+    maxAskForConvertPerDay = json['maxAskForConvertPerDay'];
     createdAt = json['createdAt'];
     modifiedAt = json['modifiedAt'];
   }
@@ -39,6 +40,7 @@ DateTime? modifiedAt;
     data['stepsMultiplayer'] = this.stepsMultiplayer;
     data['maxBoxPerDay'] = this.maxBoxPerDay;
     data['maxVisitPerDay'] = this.maxVisitPerDay;
+    data['maxAskForConvertPerDay'] = this.maxAskForConvertPerDay;
     data['createdAt'] = this.createdAt;
     data['modifiedAt'] = this.modifiedAt;
     return data;

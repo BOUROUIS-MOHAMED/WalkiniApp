@@ -61,3 +61,32 @@ void showAwesomeSnackBar(BuildContext _context,String title,String text,Color co
     ),
   );
 }
+void showNormalSnackBar(BuildContext _context,String title,Color color,Color textColor){
+  ScaffoldMessenger.of(_context).showSnackBar(
+    SnackBar(content: Stack(
+      children: [
+        Container(
+            height: 0.05.sh,
+            width: 0.9.sw,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: color
+            ),
+            child: Center(
+              child: Text(title,style: TextStyle(
+                  fontSize: 0.02.sh,color:textColor??Colors.white
+              ),
+              maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )),
+        ],
+    ),
+
+      behavior: SnackBarBehavior.floating,
+      backgroundColor:Colors.transparent ,
+      elevation: 0,
+    ),
+  );
+}
+

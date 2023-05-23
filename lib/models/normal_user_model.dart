@@ -1,4 +1,4 @@
-class ProfileModel {
+class NormalUserModel {
   int? id;
   String? firstName;
   String? lastName;
@@ -7,34 +7,41 @@ class ProfileModel {
   String? secretPassword;
   String? image;
   String? gender;
-  DateTime? birthday;
+  String? birthday;
   double? latitude;
   double? longitude;
-  String? boosts;
-  String? banDetails;
-  Duration? banDuration;
+  String? banInfo;
+  String? qrCode;
   String? secretKey;
   String? token;
-  String? emeraldBalance;
-  String? coinBalance;
+  double? emeraldBalance;
+  double? coinBalance;
   String? totalSteps;
+  String? boosts;
   String? coupons;
-  String? boxes;
   String? places;
+  String? badges;
+  String? workouts;
+  String? completedWorkouts;
+  String? challenges;
   String? score;
   String? nationality;
   int? membership;
-  DateTime? lastMembershipActivationDate;
-  int? additionalInformationId;
-  String? reviewsId;
+  String? lastMembershipActivationDate;
   String? inbox;
-  DateTime? createdAt;
-  DateTime? modifiedAt;
+  String? seenInbox;
+  String? receivedNotification;
+  String? heightInCm;
+  String? weight;
+  String? goals;
+  bool? adBlocker;
+  String? phoneType;
+  String? logs;
+  String? createdAt;
+  String? modifiedAt;
   bool? banned;
-  bool? partner;
-  String? qrCode;
 
-  ProfileModel(
+  NormalUserModel(
       {this.id,
         this.firstName,
         this.lastName,
@@ -46,31 +53,38 @@ class ProfileModel {
         this.birthday,
         this.latitude,
         this.longitude,
-        this.boosts,
-        this.banDetails,
-        this.banDuration,
+        this.banInfo,
+        this.qrCode,
         this.secretKey,
         this.token,
         this.emeraldBalance,
         this.coinBalance,
         this.totalSteps,
+        this.boosts,
         this.coupons,
-        this.boxes,
         this.places,
+        this.badges,
+        this.workouts,
+        this.completedWorkouts,
+        this.challenges,
         this.score,
         this.nationality,
         this.membership,
         this.lastMembershipActivationDate,
-        this.reviewsId,
         this.inbox,
-        this.additionalInformationId,
+        this.seenInbox,
+        this.receivedNotification,
+        this.heightInCm,
+        this.weight,
+        this.goals,
+        this.adBlocker,
+        this.phoneType,
+        this.logs,
         this.createdAt,
         this.modifiedAt,
-        this.banned,
-        this.partner,
-        this.qrCode});
+        this.banned});
 
-  ProfileModel.fromJson(Map<String, dynamic> json) {
+  NormalUserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['firstName'];
     lastName = json['lastName'];
@@ -79,32 +93,39 @@ class ProfileModel {
     secretPassword = json['secretPassword'];
     image = json['image'];
     gender = json['gender'];
-    birthday =DateTime.tryParse( json['birthday']);
+    birthday = json['birthday'];
     latitude = json['latitude'];
     longitude = json['longitude'];
-    boosts = json['boosts'];
-    banDetails = json['banDetails'];
-    banDuration =Duration(milliseconds:json['banDurationInSeconds'])??Duration.zero;
+    banInfo = json['banInfo'];
+    qrCode = json['qrCode'];
     secretKey = json['secretKey'];
-    additionalInformationId=json['additionalInformationId'];
     token = json['token'];
     emeraldBalance = json['emeraldBalance'];
     coinBalance = json['coinBalance'];
     totalSteps = json['totalSteps'];
+    boosts = json['boosts'];
     coupons = json['coupons'];
-    boxes = json['boxes'];
     places = json['places'];
+    badges = json['badges'];
+    workouts = json['workouts'];
+    completedWorkouts = json['completedWorkouts'];
+    challenges = json['challenges'];
     score = json['score'];
     nationality = json['nationality'];
     membership = json['membership'];
     lastMembershipActivationDate = json['lastMembershipActivationDate'];
-    reviewsId = json['reviewsId'];
     inbox = json['inbox'];
-    createdAt =DateTime.tryParse( json['createdAt']);
-    modifiedAt = DateTime.tryParse(json['modifiedAt']);
+    seenInbox = json['seenInbox'];
+    receivedNotification = json['receivedNotification'];
+    heightInCm = json['heightInCm'];
+    weight = json['weight'];
+    goals = json['goals'];
+    adBlocker = json['adBlocker'];
+    phoneType = json['phoneType'];
+    logs = json['logs'];
+    createdAt = json['createdAt'];
+    modifiedAt = json['modifiedAt'];
     banned = json['banned'];
-    partner = json['partner'];
-    qrCode = json['qrCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -117,32 +138,39 @@ class ProfileModel {
     data['secretPassword'] = this.secretPassword;
     data['image'] = this.image;
     data['gender'] = this.gender;
-    data['birthday'] = this.birthday?.toIso8601String();
+    data['birthday'] = this.birthday;
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
-    data['boosts'] = this.boosts;
-    data['banDetails'] = this.banDetails;
-    data['banDuration'] = this.banDuration?.inMilliseconds.toString();
+    data['banInfo'] = this.banInfo;
+    data['qrCode'] = this.qrCode;
     data['secretKey'] = this.secretKey;
     data['token'] = this.token;
-    data['additionalInformationId']=this.additionalInformationId;
     data['emeraldBalance'] = this.emeraldBalance;
     data['coinBalance'] = this.coinBalance;
     data['totalSteps'] = this.totalSteps;
+    data['boosts'] = this.boosts;
     data['coupons'] = this.coupons;
-    data['boxes'] = this.boxes;
     data['places'] = this.places;
+    data['badges'] = this.badges;
+    data['workouts'] = this.workouts;
+    data['completedWorkouts'] = this.completedWorkouts;
+    data['challenges'] = this.challenges;
     data['score'] = this.score;
     data['nationality'] = this.nationality;
     data['membership'] = this.membership;
-    data['lastMembershipActivationDate'] = this.lastMembershipActivationDate?.toIso8601String();
-    data['reviewsId'] = this.reviewsId;
+    data['lastMembershipActivationDate'] = this.lastMembershipActivationDate;
     data['inbox'] = this.inbox;
-    data['createdAt'] = this.createdAt?.toIso8601String();
-    data['modifiedAt'] = this.modifiedAt?.toIso8601String();
+    data['seenInbox'] = this.seenInbox;
+    data['receivedNotification'] = this.receivedNotification;
+    data['heightInCm'] = this.heightInCm;
+    data['weight'] = this.weight;
+    data['goals'] = this.goals;
+    data['adBlocker'] = this.adBlocker;
+    data['phoneType'] = this.phoneType;
+    data['logs'] = this.logs;
+    data['createdAt'] = this.createdAt;
+    data['modifiedAt'] = this.modifiedAt;
     data['banned'] = this.banned;
-    data['partner'] = this.partner;
-    data['qrCode'] = this.qrCode;
     return data;
   }
 }

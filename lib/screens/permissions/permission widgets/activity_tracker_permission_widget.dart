@@ -99,10 +99,10 @@ init();
 
                 children: [
                   LinearProgressBar(
-                    maxSteps: 6,
+                    maxSteps: 3,
                     progressType: LinearProgressBar.progressTypeLinear,
                     // Use Linear progress
-                    currentStep: 2,
+                    currentStep: 1,
                     progressColor: AppColors.appGreen,
                     minHeight: 0.01.sh,
                     backgroundColor: Colors.grey,

@@ -1,21 +1,21 @@
+import 'dart:ffi';
+
 class BanModel {
   int? id;
   String? name;
   String? description;
-  String? image;
   String? reason;
-  Duration? banDuration;
+  Long? banDurationInSeconds;
   String? message;
-  DateTime? createdAt;
-  DateTime? modifiedAt;
+  String? createdAt;
+  String? modifiedAt;
 
   BanModel(
       {this.id,
         this.name,
         this.description,
-        this.image,
         this.reason,
-        this.banDuration,
+        this.banDurationInSeconds,
         this.message,
         this.createdAt,
         this.modifiedAt});
@@ -24,9 +24,8 @@ class BanModel {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    image = json['image'];
     reason = json['reason'];
-    banDuration = json['banDuration'];
+    banDurationInSeconds = json['banDurationInSeconds'];
     message = json['message'];
     createdAt = json['createdAt'];
     modifiedAt = json['modifiedAt'];
@@ -37,9 +36,8 @@ class BanModel {
     data['id'] = this.id;
     data['name'] = this.name;
     data['description'] = this.description;
-    data['image'] = this.image;
     data['reason'] = this.reason;
-    data['banDuration'] = this.banDuration;
+    data['banDurationInSeconds'] = this.banDurationInSeconds;
     data['message'] = this.message;
     data['createdAt'] = this.createdAt;
     data['modifiedAt'] = this.modifiedAt;

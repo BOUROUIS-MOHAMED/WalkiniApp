@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:start_up_project/screens/auth/otpSender.dart';
 
 import '../../utils/colors.dart';
 import '../../widgets/authentification/custom_input_field.dart';
@@ -22,9 +23,9 @@ class ForgetPwScreen extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'AFOFA',
+                  '',
                   style: Theme.of(context).textTheme.headline1!.copyWith(
-                        color: Colors.white,
+                        color: AppColors.mainColor,
                       ),
                 ),
                 SizedBox(
@@ -110,7 +111,7 @@ class ForgetPwScreen extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
-
+Navigator.of(context).push(MaterialPageRoute(builder: (context) => SendOTPScreen(),));
                               }
 
                               ,

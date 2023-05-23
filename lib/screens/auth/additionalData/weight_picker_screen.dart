@@ -7,24 +7,24 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icon.dart';
-import 'package:scroll_date_picker/scroll_date_picker.dart';
-import 'package:start_up_project/models/profile_additional_information_model.dart';
-import 'package:start_up_project/models/profile_model.dart';
-import 'package:start_up_project/screens/auth/additionalData/physical_problem_picker_screen.dart';
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/utils/colors.dart';
+import 'package:start_up_project/widgets/showAwesomeSnackBar.dart';
+
+import 'image_picker_screen.dart';
 
 
 class WeightPickerScreen extends StatefulWidget {
-  WeightPickerScreen({Key? key,required this.profileModel,required this.profileAdditionalInformationModel}) : super(key: key);
-  ProfileModel profileModel=ProfileModel();
-  ProfileAdditionalInformationModel profileAdditionalInformationModel = ProfileAdditionalInformationModel();
+  WeightPickerScreen({Key? key,required this.profileModel}) : super(key: key);
+  NormalUserModel profileModel=NormalUserModel();
+
 
   @override
   State<WeightPickerScreen> createState() => _WeightPickerScreenState();
 }
 bool isKiloGram=true;
 TextEditingController weightTextFieldController=TextEditingController();
-String weight="70.0";
+double weight=70.0;
 List units=[
   "kg","LBS"
 ];
@@ -40,7 +40,10 @@ class _WeightPickerScreenState extends State<WeightPickerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.profileModel.toJson().toString());
+    valid=false;
     return  Scaffold(
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -142,24 +145,30 @@ class _WeightPickerScreenState extends State<WeightPickerScreen> {
                                     ),
                                     child: TextFormField(
                                       inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[,.]{0,1}[0-9]*')),
+                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[.,]{0,1}[0-9]*')),
                                         TextInputFormatter.withFunction(
                                               (oldValue, newValue) => newValue.copyWith(
                                             text: newValue.text.replaceAll('.', ','),
                                           ),
                                         ),
                                       ],
-                                      maxLength: 3,
+                                      maxLength: 5,
                                       controller: weightTextFieldController,
                                       onChanged: (value) {
                                         {
                                           if(value.isNotEmpty){
-                                            double w=double.parse(value) ;
-                                            if (w <45.0){
+                                            valid=false;
+                                           var x=value.replaceAll(',', '.');
+                                            double? w=double.parse(x) ;
+                                            print(w);
+                                            print(w<45.0);
+                                            print(w<200.0);
+                                            print(w<200.0 || w>50);
+                                            if (w <45.0 || w>200.0){
                                               valid=false;
                                             }else{
                                               valid=true;
-                                              weight=w.toString()+unit;
+                                              weight=w;
                                             }
 
 
@@ -223,9 +232,17 @@ class _WeightPickerScreenState extends State<WeightPickerScreen> {
                   child: GestureDetector(
                     onTap: (){
                       if (valid) {
-                        widget.profileAdditionalInformationModel.weight=weight;
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProblemPickerScreen(profileModel: widget.profileModel, profileAdditionalInformationModel: widget.profileAdditionalInformationModel,),));
+                        if (unit==units[0]) {
+                          widget.profileModel.weight=weight.toString();
+                        }  else{
+                          double x=weight!*0.453592;
+                          widget.profileModel.weight=x.toString();
+                        }
 
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ImagePickerScreen(profileModel: widget.profileModel),));
+
+                      }else{
+                        showAwesomeSnackBar(context, "Error", "Please enter a valid weigh", Colors.redAccent, Colors.red);
                       }
                     },
                     child: Container(

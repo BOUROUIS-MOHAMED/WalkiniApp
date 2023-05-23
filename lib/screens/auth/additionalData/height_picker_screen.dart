@@ -9,23 +9,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
-import 'package:start_up_project/models/profile_additional_information_model.dart';
-import 'package:start_up_project/models/profile_model.dart';
+
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/screens/auth/additionalData/weight_picker_screen.dart';
 import 'package:start_up_project/utils/colors.dart';
+import 'package:start_up_project/widgets/showAwesomeSnackBar.dart';
 
 
 class HeightPickerScreen extends StatefulWidget {
-  HeightPickerScreen({Key? key,required this.profileModel,required this.profileAdditionalInformationModel}) : super(key: key);
-  ProfileModel profileModel=ProfileModel();
-  ProfileAdditionalInformationModel profileAdditionalInformationModel;
+  HeightPickerScreen({Key? key,required this.profileModel}) : super(key: key);
+  NormalUserModel profileModel=NormalUserModel();
+
 
   @override
   State<HeightPickerScreen> createState() => _HeightPickerScreenState();
 }
 bool isCentimeter=true;
 TextEditingController heightTextFieldController=TextEditingController();
-String height="100.0";
+double height=100.0;
 List units=[
   "cm","ft"
 ];
@@ -40,7 +41,10 @@ class _HeightPickerScreenState extends State<HeightPickerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.profileModel.toJson().toString());
+    ;
     return  Scaffold(
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -149,17 +153,22 @@ class _HeightPickerScreenState extends State<HeightPickerScreen> {
                                        ),
                                      ),
                                    ],
-                                   maxLength: 3,
+                                   maxLength: 5,
                                    controller: heightTextFieldController,
                                    onChanged: (value) {
+
                                      {
                                        if(value.isNotEmpty){
+                                         valid=false;
                                          double h=double.parse(value) ;
-                                         if (h <100.0){
+                                         print("h="+h.toString());
+                                         if (h<100.0 || h>250.0){
+                                           print("hi");
                                            valid=false;
                                          }else{
+                                           print("by");
                                            valid=true;
-                                           height=h.toString()+unit;
+                                           height=h;
                                          }
 
 
@@ -223,9 +232,18 @@ isDense: true,
                   child: GestureDetector(
                     onTap: (){
                       if (valid) {
-                        widget.profileAdditionalInformationModel.height=height;
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => WeightPickerScreen(profileModel: widget.profileModel, profileAdditionalInformationModel: widget.profileAdditionalInformationModel,),));
+                        print(unit);
+                        print(unit==units[0]);
+                        if (unit==units[0]) {
+                          widget.profileModel.heightInCm=height.toString();
+                        }  else{
+                          double x=height*2.54;
+                          widget.profileModel.heightInCm=x.toString();
+                        }
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => WeightPickerScreen(profileModel: widget.profileModel),));
 
+                      }else{
+                        showAwesomeSnackBar(context, "Error", "Please enter a valid height", Colors.redAccent, Colors.orange);
                       }
                     },
                     child: Container(

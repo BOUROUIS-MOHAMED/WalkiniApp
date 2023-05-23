@@ -16,23 +16,25 @@ class TabIconData {
   });
 
   static List<TabIconData> tabIconsList = [
+
     TabIconData(
-      image: 'assets/images/tab_1.png',
-      selectedImage: 'assets/images/tab_1s.png',
+      image: 'assets/images/tab_2.png',
+      selectedImage: 'assets/images/tab_2s.png',
       index: 0,
       isSelected: true,
       animationController: null,
     ),
+
     TabIconData(
-      image: 'assets/images/tab_2.png',
-      selectedImage: 'assets/images/tab_2s.png',
+      image: 'assets/images/tab_3.png',
+      selectedImage: 'assets/images/tab_3s.png',
       index: 1,
       isSelected: false,
       animationController: null,
     ),
     TabIconData(
-      image: 'assets/images/tab_3.png',
-      selectedImage: 'assets/images/tab_3s.png',
+      image: 'assets/images/tab_1.png',
+      selectedImage: 'assets/images/tab_1s.png',
       index: 2,
       isSelected: false,
       animationController: null,

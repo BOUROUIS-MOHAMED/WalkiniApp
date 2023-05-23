@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:start_up_project/models/normal_user_model.dart';
 import 'package:start_up_project/screens/auth/signup_screen.dart';
+import 'package:start_up_project/screens/charity/charity%20home/charity_home_screen.dart';
 import 'package:start_up_project/screens/home%20Page/home_page.dart';
+import 'package:start_up_project/screens/profile/profil_screen.dart';
 import 'package:start_up_project/widgets/socialMediaCircle.dart';
 
 import '../../controllers/auth_controller.dart';
@@ -249,24 +253,39 @@ class _LoginScreenState extends State<LoginScreen> {
                                       height: 0.01.sh,
                                     ),
                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Checkbox(
-                                            value: conditionChecker,
-                                            side: BorderSide(
-                                                color: AppColors.purpleColor),
-                                            checkColor: Colors.white,
-                                            activeColor: AppColors.purpleColor,
-                                            onChanged: ((newvalue) {
-                                              setState(() {
-                                                conditionChecker = newvalue!;
-                                              });
-                                            })),
+                                        Row(
+
+                                          children: [
+                                            Checkbox(
+                                                value: conditionChecker,
+                                                side: BorderSide(
+                                                    color: AppColors.purpleColor),
+                                                checkColor: Colors.white,
+                                                activeColor: AppColors.purpleColor,
+                                                onChanged: ((newvalue) {
+                                                  setState(() {
+                                                    conditionChecker = newvalue!;
+                                                  });
+                                                })),
+                                            GestureDetector(
+                                              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgetPwScreen(),)),
+                                              child: AppText(
+                                                text: 'Remember me',
+                                                letterSpacing: -0.8,
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                         GestureDetector(
-                                          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgetPwScreen(),)),
-                                          child: AppText(
-                                            text: 'Remember me',
-                                            letterSpacing: -0.8,
-                                          ),
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>ForgetPwScreen() ));
+                                          },
+
+                                          child: Text("Restore password",style: TextStyle(
+                                            decoration: TextDecoration.underline
+                                          ),),
                                         )
                                       ],
                                     ),
@@ -425,9 +444,15 @@ bottom: 0.02.sh,
     var conn = await Get.find<AuthController>().login(email,email,pass);
     print(conn.message);
     if (conn.thereIsAnError==false) {
-      showAwesomeSnackBar(context, "Done", "User loged in", AppColors.mainColor, AppColors.darkGreen);
-      print("user login successfully");
+
+
+    //    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileScreen(),));
+        print("user login successfully");
+
+
+
     }else{
+      showAwesomeSnackBar(context, "Error", conn.message!, Colors.redAccent, Colors.red);
       print("there is a problem : ${conn.message}");
     }
   }

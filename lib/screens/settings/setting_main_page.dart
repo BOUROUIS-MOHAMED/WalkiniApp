@@ -1,12 +1,19 @@
 import 'dart:io';
 
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:health/health.dart';
+import 'package:start_up_project/FAQs_screen.dart';
+import 'package:start_up_project/constants.dart';
+import 'package:start_up_project/models/normal_user_model.dart';
+import 'package:start_up_project/screens/settings/about_us_screen.dart';
 import 'package:start_up_project/screens/settings/single%20page%20settings/apperance%20settings/apparence_settings_page.dart';
 import 'package:start_up_project/screens/settings/single%20page%20settings/user%20information%20settings/user_information_settings.dart';
+import 'package:start_up_project/widgets/showAwesomeSnackBar.dart';
 
 import '../../utils/colors.dart';
 
@@ -18,48 +25,82 @@ class SettingsMainPage extends StatefulWidget {
 }
 
 class _SettingsMainPageState extends State<SettingsMainPage> {
-  HealthFactory health = HealthFactory();
-  var types = [
-    HealthDataType.STEPS,
-    HealthDataType.BLOOD_GLUCOSE,
-
-  ];
-
-  request() async {
-    bool requested = await health.requestAuthorization(types);
-
+NormalUserModel normalUserModel=NormalUserModel();
+  initData(){
+    normalUserModel=NormalUserModel.fromJson( GetStorage().read(Constants.profileModelKey));
   }
   var now = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
 
-    request();
+
+
     return Scaffold(
       body: Padding(
 
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
-            // User card
-            BigUserCard(
-              backgroundColor: Colors.redAccent.shade100,
-              userName: "Bourouis Mohamed",
-              userProfilePic: AssetImage("assets/logo/1.png"),
-              cardActionWidget: SettingsItem(
-                icons: Icons.edit,
-                iconStyle: IconStyle(
-                  withBackground: true,
-                  borderRadius: 50,
-                  backgroundColor: Colors.yellow[600],
+            CachedNetworkImage(
+              imageUrl: normalUserModel.image??"",
+              imageBuilder: (context, imageProvider) =>  BigUserCard(
+                backgroundColor: Colors.redAccent.shade100,
+                userName: "Bourouis Mohamed",
+                userProfilePic: imageProvider,
+                cardActionWidget: SettingsItem(
+                  icons: Icons.edit,
+                  iconStyle: IconStyle(
+                    withBackground: true,
+                    borderRadius: 50,
+                    backgroundColor: Colors.yellow[600],
+                  ),
+                  title: "Modify",
+                  subtitle: "Tap to change your data",
+                  onTap: () {
+                    print("OK");
+                  },
                 ),
-                title: "Modify",
-                subtitle: "Tap to change your data",
-                onTap: () {
-                  print("OK");
-                },
+              ),
+              placeholder: (context, url) =>  BigUserCard(
+                backgroundColor: Colors.redAccent.shade100,
+                userName: "Bourouis Mohamed",
+                userProfilePic: AssetImage("assets/avatars/avatar-2.png"),
+                cardActionWidget: SettingsItem(
+                  icons: Icons.edit,
+                  iconStyle: IconStyle(
+                    withBackground: true,
+                    borderRadius: 50,
+                    backgroundColor: Colors.yellow[600],
+                  ),
+                  title: "Modify",
+                  subtitle: "Tap to change your data",
+                  onTap: () {
+                    print("OK");
+                  },
+                ),
+              ),
+              errorWidget: (context, url, error) => BigUserCard(
+                backgroundColor: Colors.redAccent.shade100,
+                userName: "Bourouis Mohamed",
+                userProfilePic: AssetImage("assets/avatars/avatar-2.png"),
+                cardActionWidget: SettingsItem(
+                  icons: Icons.edit,
+                  iconStyle: IconStyle(
+                    withBackground: true,
+                    borderRadius: 50,
+                    backgroundColor: Colors.yellow[600],
+                  ),
+                  title: "Modify",
+                  subtitle: "Tap to change your data",
+                  onTap: () {
+                    print("OK");
+                  },
+                ),
               ),
             ),
+            // User card
+
             SettingsGroup(
               items: [
                 SettingsItem(
@@ -69,7 +110,7 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
                   icons: CupertinoIcons.pencil_outline,
                   iconStyle: IconStyle(),
                   title: 'Appearance',
-                  subtitle: "Make Walkini'App yours",
+                  subtitle: "Make Walkini App yours",
                 ),
                 SettingsItem(
                   onTap: () {
@@ -84,24 +125,12 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
                   title: 'User Information',
                   subtitle: "you have a cute face ",
                 ),
-                SettingsItem(
-                  onTap: () {},
-                  icons: CupertinoIcons.heart,
-                  iconStyle: IconStyle(
-                    iconsColor: Colors.white,
-                    withBackground: true,
-                    backgroundColor: Colors.red,
-                  ),
-                  title: Platform.isAndroid?"Google Fit":"Apple Fitness",
-                  subtitle: "we need some data,trust me",
-                  trailing: Switch.adaptive(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                ),
+
 
                 SettingsItem(
-                  onTap: () {},
+                  onTap: () {
+                    showNormalSnackBar(context, "This feature will come in the next major update", AppColors.purpleColor, Colors.white);
+                  },
                   icons: CupertinoIcons.clock,
                   iconStyle: IconStyle(
                     iconsColor: Colors.white,
@@ -117,13 +146,16 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
             SettingsGroup(
               items: [
                 SettingsItem(
-                  onTap: () {},
+                  onTap: () {
+                    showNormalSnackBar(context, "This tab will redirect you to app page", Colors.red, Colors.white);
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AboutUsPage(),));
+                  },
                   icons: Icons.info_rounded,
                   iconStyle: IconStyle(
                     backgroundColor: Colors.purple,
                   ),
-                  title: 'About',
-                  subtitle: "Learn more about Ziar'App",
+                  title: 'About Us',
+                  subtitle: "Learn more about Walkini App",
                 ),
               ],
             ),
@@ -141,6 +173,7 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
 
                 ),
                 SettingsItem(
+
                   onTap: () {},
                   icons: Icons.notifications_active_outlined,
                   iconStyle: IconStyle(
@@ -148,16 +181,6 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
                   ),
                   title: 'Notifications and Sounds',
                   subtitle: "do you want me to call you?",
-
-                ),
-                SettingsItem(
-                  onTap: () {},
-                  icons: Icons.folder_copy_outlined,
-                  iconStyle: IconStyle(
-                    backgroundColor: Colors.yellow,
-                  ),
-                  title: 'Data',
-                  subtitle: "your,our treasure",
 
                 ),
                 SettingsItem(
@@ -172,40 +195,34 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
                 ),
               ],
             ),
-            SettingsGroup(
-              settingsGroupTitle: "Only For premium",
-                items: [
-                  SettingsItem(
-                    onTap: () {},
-                    icons: FontAwesomeIcons.crown,
-                    iconStyle: IconStyle(
-                      backgroundColor: Colors.teal,
-                    ),
-                    title: 'Vip Settings',
-                    subtitle: "Welcome boss",
+          SettingsGroup(
+              settingsGroupTitle: "Membership",
+              items: [
+              SettingsItem(
+              onTap: () {},
+        icons: Icons.admin_panel_settings_sharp,
+        iconStyle: IconStyle(
+          backgroundColor: Colors.brown,
+        ),
+        title: 'MemberShip Settings',
+        subtitle: "UNO DE NOI",
 
-                  ),
-                  SettingsItem(
-                    onTap: () {},
-                    icons: Icons.admin_panel_settings_sharp,
-                    iconStyle: IconStyle(
-                      backgroundColor: Colors.brown,
-                    ),
-                    title: 'MemberShip Settings',
-                    subtitle: "UNO DE NOI",
 
-                  ),
-                ]),
+                ),]),
+
+
+
 
 
             // You can add a settings title
 
-            SettingsGroup(
+             SettingsGroup(
                 settingsGroupTitle: "Preferences",
                 items: [
                   SettingsItem(
                     onTap: () {},
                     icons: FontAwesomeIcons.ruler,
+
                     iconStyle: IconStyle(
                       backgroundColor: Colors.deepOrangeAccent,
                     ),
@@ -225,23 +242,12 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
                   ),
                   SettingsItem(
                     onTap: () {},
-                    icons: Icons.local_parking,
-                    iconStyle: IconStyle(
-                      backgroundColor: Colors.yellowAccent,
-                    ),
-                    title: 'Placement',
-                    subtitle: "We said its yours right ?",
-
-                  ),
-                  SettingsItem(
-                    onTap: () {},
                     icons: FontAwesomeIcons.faceKissWinkHeart,
                     iconStyle: IconStyle(
                       backgroundColor: Colors.green.shade900,
                     ),
                     title: 'Partners',
                     subtitle: "Can you be my valentine ?",
-
                   ),
                 ]),
 
@@ -250,7 +256,9 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
                 settingsGroupTitle: "Help",
                 items: [
                   SettingsItem(
-                    onTap: () {},
+                    onTap: () {
+                      showNormalSnackBar(context, "This tab will send to to email form", AppColors.yellowColor, Colors.black);
+                    },
                     icons: Icons.question_mark_rounded,
                     iconStyle: IconStyle(
                       backgroundColor: Colors.pinkAccent,
@@ -260,7 +268,9 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
 
                   ),
                   SettingsItem(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => FAQsScreen(),));
+                    },
                     icons: Icons.question_answer_outlined,
                     iconStyle: IconStyle(
                       backgroundColor: Colors.orange,
@@ -270,7 +280,9 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
 
                   ),
                   SettingsItem(
-                    onTap: () {},
+                    onTap: () {
+                      showNormalSnackBar(context, "this page will redirect you to privacy and policy page when its done", Colors.red, Colors.black);
+                    },
                     icons: Icons.local_police_outlined,
                     iconStyle: IconStyle(
                       backgroundColor: Colors.lightGreen,
@@ -286,19 +298,23 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
               settingsGroupTitle: "Account",
               items: [
                 SettingsItem(
-                  onTap: () {},
+                  onTap: () {
+                    showNormalSnackBar(context, "Good by! please come back soon", Colors.black, Colors.white);
+                  },
                   icons: Icons.exit_to_app_rounded,
                   iconStyle: IconStyle(
                     backgroundColor: Colors.grey,
                   ),
                   title: "Sign Out",
-                  subtitle: "Where are you going bro ?",
+                  subtitle: "Where are you going ?",
                 ),
                 SettingsItem(
-                  onTap: () {},
+                  onTap: () {
+                    showNormalSnackBar(context, "Good by my lover! good by my friend", Colors.black, Colors.white);
+                  },
                   icons: CupertinoIcons.delete_solid,
                   title: "DELETE ACCOUNT",
-                  subtitle: "We will lost a soldier ?",
+                  subtitle: "We will lost a soldier !",
                   iconStyle: IconStyle(
                     backgroundColor: Colors.blueGrey,
                   ),
@@ -311,11 +327,11 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
 
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+
+
+      ],
+      ) ])));
+
+
   }
 }
